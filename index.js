@@ -38,3 +38,7 @@ function getUser() {
     })
 }
 
+function renderUser(user) {
+     
+}
+
