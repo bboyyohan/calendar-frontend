@@ -28,6 +28,8 @@ let currentMonth = () => currentDate.getMonth() // whenever you get currentMonth
 let currentYear = () => currentDate.getFullYear()
 
 document.addEventListener("DOMContentLoaded", () => {
+    renderLogin();
+    
     renderCalendar(currentMonth(), currentYear()) //invoking because its a fn not a variable due to line 35 + 38
     // debugger
     let leftArr = document.querySelector(".prev")
@@ -54,10 +56,46 @@ document.addEventListener("DOMContentLoaded", () => {
         renderCalendar(currentMonth(), currentYear())
       
     })
-    document.querySelector("button").addEventListener("click", renderForm)
+    document.querySelector("#task").addEventListener("click", renderForm)
 
 })
 
+
+function renderLogin(){
+    const login = document.getElementById("login")
+    const loginForm = document.createElement("form")
+    loginForm.className= "login-form"
+    document.body.appendChild(loginForm)
+
+    let input = document.createElement("input")
+    input.setAttribute("type", "text")
+    input.setAttribute("placeholder", "email")
+    loginForm.appendChild(input)
+    
+    document.getElementById("login").addEventListener("click", (e) => {
+        getUser(e)})
+}
+
+function getUser(e) {
+    let email = document.querySelector("input").value
+    
+    fetch(USERS_URL)
+    .then(res => res.json())
+    .then(userArr => {
+        // if matches
+        let theUser = userArr.filter(user => {
+            return user.email === email
+        });
+        renderUser(theUser)
+            //then render the logined user's calender
+            // renderCalender(loggined user id)
+    }) 
+}
+
+function renderUser(user) {
+    console.log(user[0].email)
+    invokes renderTask(id)
+}
 
 function renderCalendar(m, y) {
 
