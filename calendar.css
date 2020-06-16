@@ -4,7 +4,7 @@ body {font-family: Verdana, sans-serif;}
 /* Month header */
 .month {
   padding: 70px 25px;
-  width: 100%;
+  width: 97%;
   background: green;
   text-align: center;
 }
