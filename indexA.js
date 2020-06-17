@@ -79,13 +79,14 @@ function renderLogin(){
 function getUser(e) {
     let email = document.querySelector("input").value
     
+    
     fetch(USERS_URL)
     .then(res => res.json())
     .then(userArr => {
         // if matches
         let theUser = userArr.filter(user => {
             return user.email === email
-        });
+        })
         renderUser(theUser)
             //then render the logined user's calender
             // renderCalender(loggined user id)
@@ -93,8 +94,17 @@ function getUser(e) {
 }
 
 function renderUser(user) {
+    debugger
     console.log(user[0].email)
-    invokes renderTask(id)
+
+    // cat.hobbies.forEach(hobby => {
+    //     let content = catDiv.querySelector(".extra.content")
+    //     let li = document.createElement("li")
+    //     li.innerText = hobby.name
+    //     // debugger
+    //     content.append(li)
+    //   })
+    // invokes renderTask(id)
 }
 
 function renderCalendar(m, y) {
@@ -146,12 +156,14 @@ function renderCalendar(m, y) {
         // debugger
         // let previousMonthDates = document.createElement("li")
         // previousMonthDates.innerHTML = `${prevMonthLastDay - x + 1}`
+        // days.append(previousMonthDates)
 
     }
   
     for (let i = 1; i <= lastDay; i++) {
         days += `<li>${i}</li>`
     }
+    
   
     for (let j = 1; j <= nextDays; j++) {
       days += `<li class="next-date">${j}</li>`
@@ -163,6 +175,9 @@ function renderCalendar(m, y) {
     monthText.innerHTML = months[currentDate.getMonth()]
     year.innerText = currentYear()
 
+    var daysCollection = document.querySelector("ul.days").children
+    daysCollection = Array.from(daysCollection)
+    var arr = daysCollection.map(li => li.setAttribute("id", li.innerText))
  
 }
 
