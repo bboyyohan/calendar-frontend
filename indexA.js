@@ -152,8 +152,10 @@ function renderUserTask(user) {
         daysCollection = Array.from(daysCollection)
     
     user.tasks.forEach(task => {
-        let welcome = document.querySelector("h4")
-        let li = document.createElement("li")
+        // let welcome = document.querySelector("h4")
+        // let li = document.createElement("li")
+        // ^ temp moved to showTaskDetails
+
         // debugger
         // let taskDate = task.title + task.date.split('T')[0].split("-")[2]
          // makes it so splits everything after T form date, get 1st element(Y-M-D)
@@ -163,8 +165,12 @@ function renderUserTask(user) {
         let dLi = document.getElementById(taskDate)
         let taskTitle = document.createElement("p")
         taskTitle.innerText = task.title
+        taskTitle.dataset.id = task.id
+        taskTitle.addEventListener("click", (e) => {
+            showTaskDetails(e, task)
+        })
         dLi.append(taskTitle)
-        debugger
+        // debugger
 
 
         
@@ -184,15 +190,61 @@ function renderUserTask(user) {
         // debugger
        
 
-        li.innerText = taskDate
-        // debugger
-        // let dateId = document
-        // if (taskDate === )
-        // let dayTask = document.getElementById("3")
-        // dayTask.insertAdjacentHTML("beforeend", task.title)
-        welcome.append(li)
-
+        // li.innerText = taskDate
+        // welcome.append(li)
+        // ^ temp move showtaskDetails
     })
+}
+
+function showTaskDetails(e, task) {
+    // debugger
+    //
+    let welcome = document.querySelector("h4")
+    let div = document.createElement("div")
+    let deleteBtn = document.createElement("button")
+    deleteBtn.className = "delete"
+    deleteBtn.dataset.id = task.id 
+    deleteBtn.innerText = "remove"
+    deleteBtn.addEventListener("click", (e) => {
+        deleteTask(e, task.id) 
+    })
+
+    let taskDate = task.date.split('T')[0]
+  
+    div.innerHTML = "date: " + taskDate + "<br />" + "title: " + task.title + "<br />" + "description: " + task.description 
+    div.append(deleteBtn)
+    welcome.append(div)
+
+
+    // debugger
+
+    //
+    // console.log(e, task)
+
+}
+
+function deleteTask(e, id) {
+    debugger
+    let div = e.target.parentElement
+    // let taskC = document.querySelector(p.id)
+    let taskId = id 
+    let dLi = document.getElementById(id)
+    dLi.getElementById()
+
+    // const USERS_URL = `${BASE_URL}/users`
+    
+    // fetch(POKEMONS_URL + "/" + id, {
+    //     method: "DELETE"
+    //   })
+    //   .catch((error)=>{
+    //     alert("error with the server:" + error.message)
+    //   })
+
+    fetch(TASKS_URL + "/" + id, {
+        method: "DELETE"
+    })
+    div.remove()
+    dLi.remove()
 }
 
 function renderCalendar(m, y) {
