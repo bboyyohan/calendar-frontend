@@ -96,13 +96,13 @@ function getUser(e) {
                 return user.email === email
             }
         })
-        renderUser(theUser)
+        welcomeUser(theUser)
             //then render the logined user's calender
             // renderCalender(loggined user id)
     }) 
 }
 
-function renderUser(theUser) {
+function welcomeUser(theUser) {
     // debugger
 
     console.log("renderUser")
@@ -114,14 +114,14 @@ function renderUser(theUser) {
     let main = document.getElementById("main-body")
     welcomeHeading.textContent = "Hi " + user.name
     main.appendChild(welcomeHeading)
+    renderUserTask(user)
+   
+
     // print out welcome user 
     // find a DOM 
     // append welcome message somewhere
 
-    
-    // invoke rednerTask
-    // let user = theUser[0]
-    // renderTask(user)
+
     
     // function renderTasks(user)
 
@@ -140,6 +140,53 @@ function renderUser(theUser) {
     //     content.append(li)
     //   })
     // invokes renderTask(id)
+}
+
+function renderUserTask(user) {
+    //**Matching id of days to date of task 
+        //There is an array of days
+    let daysCollection = document.querySelector("ul.days").children
+        daysCollection = Array.from(daysCollection)
+    
+    user.tasks.forEach(task => {
+        let welcome = document.querySelector("h4")
+        let li = document.createElement("li")
+        // debugger
+        // let taskDate = task.title + task.date.split('T')[0].split("-")[2]
+         // makes it so splits everything after T form date, get 1st element(Y-M-D)
+        // split everything among the - then get 2nd element(date)
+
+        let taskDate = task.date.split('T')[0].split("-")[2]
+        
+        
+        // let daysCollection = document.querySelector("ul.days").children
+        // daysCollection = Array.from(daysCollection)
+        // ^ original location
+        
+
+        // We can get a date of each user's task
+        // compare that particualr date of the task with the array, and if any date matches, 
+        //append task-title of that date to the element of li-id from the array. 
+
+
+
+        
+        debugger
+        let filteredDay = daysCollection.filter(day => {
+            let match = day.id === taskDate
+            return match
+
+        })
+
+        li.innerText = taskDate
+        // debugger
+        // let dateId = document
+        // if (taskDate === )
+        // let dayTask = document.getElementById("3")
+        // dayTask.insertAdjacentHTML("beforeend", task.title)
+        welcome.append(li)
+
+    })
 }
 
 function renderCalendar(m, y) {
@@ -180,12 +227,14 @@ function renderCalendar(m, y) {
 
     // console.log(lastDayIndex)
     
-    const nextDays = 7 - lastDayIndex - 1
+    const nextDays = 7 - lastDayIndex - 1 //number of days in week - index of last day of this month - 1 since we want 4 days of next month
+                                          //to show up
 
 
     let days = ""
     // ^ gets rid of all the days
 
+    // x = index of 1st day of month, subtract that number from last day of last month then + 1 (date 30 -> 31)
     for (let x = firstDay; x > 0; x--) {
       days += `<li class="prev-date">${prevMonthLastDay - x + 1}</li>`
         // debugger
@@ -200,6 +249,7 @@ function renderCalendar(m, y) {
     }
     
   
+    //#days in week(7) - index of last day of current month(2) - 1, 
     for (let j = 1; j <= nextDays; j++) {
       days += `<li class="next-date">${j}</li>`
       daysBody.innerHTML = days
@@ -213,7 +263,6 @@ function renderCalendar(m, y) {
     var daysCollection = document.querySelector("ul.days").children
     daysCollection = Array.from(daysCollection)
     daysCollection.map(li => li.setAttribute("id", li.innerText))
-
  
 }
 
