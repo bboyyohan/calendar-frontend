@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // debugger
     let leftArr = document.querySelector(".prev")
     leftArr.addEventListener("click", (e) => {
+        event.preventDefault()
 
         if (currentMonth() > 0) {
             // debugger
@@ -51,6 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     let rightArr = document.querySelector(".next")
     rightArr.addEventListener("click", (e) => {
+        event.preventDefault()
+
 
         currentDate.setMonth(currentDate.getMonth() + 1)
         renderCalendar(currentMonth(), currentYear())
@@ -157,12 +160,19 @@ function renderUserTask(user) {
         // split everything among the - then get 2nd element(date)
 
         let taskDate = task.date.split('T')[0].split("-")[2]
+        let dLi = document.getElementById(taskDate)
+        let taskTitle = document.createElement("p")
+        taskTitle.innerText = task.title
+        dLi.append(taskTitle)
+        debugger
+
+
         
         
         // let daysCollection = document.querySelector("ul.days").children
         // daysCollection = Array.from(daysCollection)
         // ^ original location
-        
+
 
         // We can get a date of each user's task
         // compare that particualr date of the task with the array, and if any date matches, 
@@ -171,12 +181,8 @@ function renderUserTask(user) {
 
 
         
-        debugger
-        let filteredDay = daysCollection.filter(day => {
-            let match = day.id === taskDate
-            return match
-
-        })
+        // debugger
+       
 
         li.innerText = taskDate
         // debugger
