@@ -229,7 +229,7 @@ function deleteTask(e, id) {
     // let taskC = document.querySelector(p.id)
     let taskId = id 
     let dLi = document.getElementById(id)
-    dLi.getElementById()
+    // dLi.getElementById()
 
     // const USERS_URL = `${BASE_URL}/users`
     
@@ -240,10 +240,10 @@ function deleteTask(e, id) {
     //     alert("error with the server:" + error.message)
     //   })
 
-    fetch(TASKS_URL + "/" + id, {
-        method: "DELETE"
-    })
-    div.remove()
+    // fetch(TASKS_URL + "/" + id, {
+    //     method: "DELETE"
+    // })
+    // div.remove()
     dLi.remove()
 }
 
