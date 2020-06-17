@@ -85,7 +85,16 @@ function getUser(e) {
     .then(userArr => {
         // if matches
         let theUser = userArr.filter(user => {
-            return user.email === email
+            // return user.email === email
+            if (user.email === email) {
+                // debugger
+                document.getElementById("login").remove()
+                document.querySelector(".login-form").remove()
+                // input.remove()
+                // login.remove()
+
+                return user.email === email
+            }
         })
         renderUser(theUser)
             //then render the logined user's calender
@@ -93,9 +102,35 @@ function getUser(e) {
     }) 
 }
 
-function renderUser(user) {
-    debugger
-    console.log(user[0].email)
+function renderUser(theUser) {
+    // debugger
+
+    console.log("renderUser")
+  
+    //
+    let user = theUser[0]
+    // let email = user.email
+    let welcomeHeading = document.createElement("h4")
+    let main = document.getElementById("main-body")
+    welcomeHeading.textContent = "Hi " + user.name
+    main.appendChild(welcomeHeading)
+    // print out welcome user 
+    // find a DOM 
+    // append welcome message somewhere
+
+    
+    // invoke rednerTask
+    // let user = theUser[0]
+    // renderTask(user)
+    
+    // function renderTasks(user)
+
+    // //render this user's tasks
+    // // fetch call 
+
+    // user.tasks
+
+    //
 
     // cat.hobbies.forEach(hobby => {
     //     let content = catDiv.querySelector(".extra.content")
@@ -143,7 +178,7 @@ function renderCalendar(m, y) {
         0
     ).getDay()
 
-    console.log(lastDayIndex)
+    // console.log(lastDayIndex)
     
     const nextDays = 7 - lastDayIndex - 1
 
@@ -177,7 +212,8 @@ function renderCalendar(m, y) {
 
     var daysCollection = document.querySelector("ul.days").children
     daysCollection = Array.from(daysCollection)
-    var arr = daysCollection.map(li => li.setAttribute("id", li.innerText))
+    daysCollection.map(li => li.setAttribute("id", li.innerText))
+
  
 }
 
