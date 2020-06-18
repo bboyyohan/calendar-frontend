@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // debugger
     let leftArr = document.querySelector(".prev")
     leftArr.addEventListener("click", (e) => {
-        event.preventDefault()
 
         if (currentMonth() > 0) {
             // debugger
@@ -52,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     let rightArr = document.querySelector(".next")
     rightArr.addEventListener("click", (e) => {
-        event.preventDefault()
 
 
         currentDate.setMonth(currentDate.getMonth() + 1)
@@ -126,23 +124,9 @@ function welcomeUser(theUser) {
 
 
     
-    // function renderTasks(user)
+    
 
-    // //render this user's tasks
-    // // fetch call 
 
-    // user.tasks
-
-    //
-
-    // cat.hobbies.forEach(hobby => {
-    //     let content = catDiv.querySelector(".extra.content")
-    //     let li = document.createElement("li")
-    //     li.innerText = hobby.name
-    //     // debugger
-    //     content.append(li)
-    //   })
-    // invokes renderTask(id)
 }
 
 function renderUserTask(user) {
@@ -164,6 +148,7 @@ function renderUserTask(user) {
         let taskDate = task.date.split('T')[0].split("-")[2]
         let dLi = document.getElementById(taskDate)
         let taskTitle = document.createElement("p")
+        // task.className = "tasks" // wasnt here before 
         taskTitle.innerText = task.title
         taskTitle.dataset.id = task.id
         taskTitle.addEventListener("click", (e) => {
@@ -206,13 +191,21 @@ function showTaskDetails(e, task) {
     deleteBtn.dataset.id = task.id 
     deleteBtn.innerText = "remove"
     deleteBtn.addEventListener("click", (e) => {
-        deleteTask(e, task.id) 
+        deleteTask(e, task) 
     })
 
     let taskDate = task.date.split('T')[0]
+
+    let editBtn = document.createElement("button")
+    editBtn.className = "edit"
+    editBtn.innerText = "edit"
+    editBtn.dataset.id = task.id 
+    editBtn.addEventListener("click", (e) => {
+        editTask(e, task)
+    })
   
     div.innerHTML = "date: " + taskDate + "<br />" + "title: " + task.title + "<br />" + "description: " + task.description 
-    div.append(deleteBtn)
+    div.append(deleteBtn, editBtn)
     welcome.append(div)
 
 
@@ -223,29 +216,26 @@ function showTaskDetails(e, task) {
 
 }
 
-function deleteTask(e, id) {
-    debugger
+function deleteTask(e, task) {
+    // debugger
     let div = e.target.parentElement
-    // let taskC = document.querySelector(p.id)
-    let taskId = id 
-    let dLi = document.getElementById(id)
-    // dLi.getElementById()
 
-    // const USERS_URL = `${BASE_URL}/users`
-    
-    // fetch(POKEMONS_URL + "/" + id, {
-    //     method: "DELETE"
-    //   })
-    //   .catch((error)=>{
-    //     alert("error with the server:" + error.message)
-    //   })
+    let taskDate = task.date.split('T')[0].split("-")[2]
 
-    // fetch(TASKS_URL + "/" + id, {
-    //     method: "DELETE"
-    // })
-    // div.remove()
-    dLi.remove()
+    let taskId = task.id 
+
+    let dLi = document.getElementById(taskDate)
+    // debugger
+
+   
+    fetch(TASKS_URL + "/" + taskId, {
+        method: "DELETE"
+    })
+    div.remove()
+    document.querySelector(`p[data-id="${task.id}"]`).remove()
+    //this allows us to find the element with p tag that has the a specific dataset id.
 }
+
 
 function renderCalendar(m, y) {
 
