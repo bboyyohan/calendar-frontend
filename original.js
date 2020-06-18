@@ -142,9 +142,7 @@ function renderUserTask(user) {
         daysCollection = Array.from(daysCollection)
     
     user.tasks.forEach(task => {
-        // let welcome = document.querySelector("h4")
-        // let li = document.createElement("li")
-        // ^ temp moved to showTaskDetails
+       
 
         // debugger
         // let taskDate = task.title + task.date.split('T')[0].split("-")[2]
@@ -152,20 +150,29 @@ function renderUserTask(user) {
         // split everything among the - then get 2nd element(date)
 
         let taskDate = task.date.split('T')[0].split("-")[2]
+        let splitDate = taskDate.split('0')[1]
+
+         
         let dLi = document.getElementById(taskDate)
         let taskTitle = document.createElement("p")
-        // task.className = "tasks" // wasnt here before 
+        if (taskDate < 10) {
+            // debugger
+            let bLi = document.getElementById(splitDate)
+            taskTitle.innerText = task.title
+            taskTitle.dataset.id = task.id
+            taskTitle.addEventListener("click", (e) => {
+            showTaskDetails(e, task)
+        })
+            bLi.append(taskTitle)
+        }else {
         taskTitle.innerText = task.title
         taskTitle.dataset.id = task.id
         taskTitle.addEventListener("click", (e) => {
             showTaskDetails(e, task)
         })
         dLi.append(taskTitle)
-        // debugger
-
-
-        
-        
+    }
+ 
         // let daysCollection = document.querySelector("ul.days").children
         // daysCollection = Array.from(daysCollection)
         // ^ original location
@@ -175,15 +182,6 @@ function renderUserTask(user) {
         // compare that particualr date of the task with the array, and if any date matches, 
         //append task-title of that date to the element of li-id from the array. 
 
-
-
-        
-        // debugger
-       
-
-        // li.innerText = taskDate
-        // welcome.append(li)
-        // ^ temp move showtaskDetails
     })
 }
 
@@ -286,10 +284,12 @@ function renderCalendar(m, y) {
 
 
     let days = ""
+    
     // ^ gets rid of all the days
 
     // x = index of 1st day of month, subtract that number from last day of last month then + 1 (date 30 -> 31)
     for (let x = firstDay; x > 0; x--) {
+        // debugger
       days += `<li class="prev-date">${prevMonthLastDay - x + 1}</li>`
         // debugger
         // let previousMonthDates = document.createElement("li")
