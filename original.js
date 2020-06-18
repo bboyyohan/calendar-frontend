@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderCalendar(currentMonth(), currentYear())
       
     })
-    document.querySelector("#task").addEventListener("click", renderForm)
+    // document.querySelector("#task").addEventListener("click", renderForm)
 
 })
 
@@ -119,7 +119,10 @@ function welcomeUser(theUser) {
     welcomeHeading.textContent = "Hi " + user.name
     main.appendChild(welcomeHeading)
     renderUserTask(user)
-   
+
+    document.querySelector("#task").addEventListener("click", (e) => { 
+        renderForm(e, theUser)})
+
 
     // print out welcome user 
     // find a DOM 
@@ -149,7 +152,6 @@ function renderUserTask(user) {
         // split everything among the - then get 2nd element(date)
 
         let taskDate = task.date.split('T')[0].split("-")[2]
-        console.log(taskDate)
         let dLi = document.getElementById(taskDate)
         let taskTitle = document.createElement("p")
         // task.className = "tasks" // wasnt here before 
@@ -319,7 +321,7 @@ function renderCalendar(m, y) {
 }
 
 
-function renderForm() {
+function renderForm(e, user) {
     console.log("renderForm")
 
     //create a form with JS
@@ -370,12 +372,13 @@ function renderForm() {
     
     //calling an submit event
     form.addEventListener("submit", (e) => {
-        handleSubmit(e)
+        handleSubmit(e,user)
     })
 }
 
-function handleSubmit(e){    
+function handleSubmit(e, user){    
     e.preventDefault()
+    // debugger
     
     //declarnig each value of input 
     const title = document.getElementById("title-input").value
@@ -385,12 +388,13 @@ function handleSubmit(e){
     const description = document.getElementById("description-input").value
     const completion = document.getElementById("completion-input").value
       
-    postTask(title, date, startTime, endTime, description, completion)
+    postTask(title, date, startTime, endTime, description, completion, user)
     }
       
 
-function postTask(title, date, startTime, endTime, description, completion) {
-
+function postTask(title, date, startTime, endTime, description, completion, user) {
+    // debugger
+    let userId = user[0].id
     fetch(TASKS_URL, {
         method: "POST",
         headers: {
@@ -404,7 +408,7 @@ function postTask(title, date, startTime, endTime, description, completion) {
         end_time: endTime,
         description: description,
         completion: completion,
-        user_id: 5
+        user_id: userId
         //^ hard-coded user_id for now.. replace it with logged-in user's id
         })
         }).then(res => res.json())
